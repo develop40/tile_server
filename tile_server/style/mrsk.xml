@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Map srs="+init=epsg:4326" background-color="steelblue">
+    <Style name="Admin style">
+        <Rule>
+            <PolygonSymbolizer fill="#ffffff"/>
+            <LineSymbolizer stroke="#85c5d3" stroke-width="2" stroke-linejoin="round" />
+        </Rule>
+    </Style>
+    <Style name="Ecoregions style">
+        <Rule>
+            <PolygonSymbolizer fill="pink"/>
+            <LineSymbolizer stroke="black" stroke-width="0.5" stroke-linejoin="round" />
+        </Rule>
+    </Style>
+     <Style name="Roads style">
+        <Rule>
+            <LineSymbolizer stroke="red" stroke-width="0.5" smooth="0.1"/>
+        </Rule>
+    </Style>
+     <Style name="Points style">
+        <Rule>
+            <PointSymbolizer/>
+        </Rule>
+    </Style>
+     <Layer name="poly" srs="+init=epsg:4326">
+        <StyleName>Ecoregions style</StyleName>
+        <Datasource>
+            <Parameter name="dbname">mrsk</Parameter>
+            <Parameter name="geometry_field">geom</Parameter>
+            <Parameter name="host">127.0.0.1</Parameter>
+            <Parameter name="password">qwerty12+</Parameter>
+            <Parameter name="table">mrsk_area_energy</Parameter>
+            <Parameter name="type">postgis</Parameter>
+            <Parameter name="user">postgres</Parameter>
+        </Datasource>
+    </Layer>
+    <Layer name="points" srs="+init=epsg:4326">
+        <StyleName>Points style</StyleName>
+        <Datasource>
+            <Parameter name="dbname">mrsk</Parameter>
+            <Parameter name="geometry_field">geom</Parameter>
+            <Parameter name="host">127.0.0.1</Parameter>
+            <Parameter name="password">qwerty12+</Parameter>
+            <Parameter name="table">mrsk_accident_avar</Parameter>
+            <Parameter name="type">postgis</Parameter>
+            <Parameter name="user">postgres</Parameter>
+        </Datasource>
+    </Layer>
+     <Layer name="lines" srs="+init=epsg:4326">
+        <StyleName>Roads style</StyleName>
+        <Datasource>
+            <Parameter name="dbname">mrsk</Parameter>
+            <Parameter name="geometry_field">geom</Parameter>
+            <Parameter name="host">127.0.0.1</Parameter>
+            <Parameter name="password">qwerty12+</Parameter>
+            <Parameter name="table">mrsk_communication_line</Parameter>
+            <Parameter name="type">postgis</Parameter>
+            <Parameter name="user">postgres</Parameter>
+        </Datasource>
+    </Layer>
+</Map>

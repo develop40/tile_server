@@ -20,7 +20,9 @@ import mapnik
 def tms(z, x, y, service):
     # (4370311.220000, 4911352.860000) - (4403732.650000, 4958349.910000)
     # Extent: (4370177.610000, 4908530.650000) - (4411390.670000, 4958581.500000)
-    bbox = dict(minx=4370177, miny=4908530, maxx=4411390, maxy=4958581)
+    #(38.376357, 44.940402) - (48.804400, 51.182006)
+
+    bbox = dict(minx=38, miny=44, maxx=50, maxy=53)
 
     step = max(bbox['maxx'] - bbox['minx'], bbox['maxy'] - bbox['miny']) / 2 ** z
 
@@ -39,7 +41,9 @@ def tms(z, x, y, service):
     tile = dict(width=256, height=256)
     map = mapnik.Map(tile['width'], tile['height'])
     map.background = mapnik.Color('steelblue')
-    mapnik.load_map(map, 'tile_server/style/styles.xml')
+
+    # mapnik.load_map(map, 'tile_server/style/styles.xml')
+    mapnik.load_map(map, 'tile_server/style/mrsk.xml')
     layer = mapnik.Layer('point')
     ds = mapnik.PostGIS(host='127.0.0.1',
                         dbname='isogd_sevastopol',
@@ -47,7 +51,7 @@ def tms(z, x, y, service):
                         password='qwerty12+',
                         table='tableapi.table_test_2_points_2')
     layer.datasource= ds
-    pdb.set_trace()
+    # pdb.set_trace()
     style= mapnik.Style()
     rule = mapnik.Rule()
     point_symbolizer = mapnik.PointSymbolizer()
