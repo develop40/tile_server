@@ -4,18 +4,19 @@ alert('hi');
     layers: [
 
       new ol.layer.Tile({
-        source: new ol.source.OSM({
-        })
+        source: new ol.source.OSM(),
       }),
       new ol.layer.Tile({
         source: new ol.source.XYZ({
             url: 'http://localhost:8000/myview/xyz/1.0.0/land/{z}/{x}/{y}.png',
             projection: 'EPSG:4326'
-        })
-      })
+        }),
+          extent: ol.proj.transformExtent([38.18, 44.65, 50, 51.28], 'EPSG:4326', 'EPSG:3857'),
+      }),
+
     ],
     view: new ol.View({
       center: ol.proj.fromLonLat([37.41, 44.82]),
-      zoom: 1
+      zoom: 5
     })
   });
