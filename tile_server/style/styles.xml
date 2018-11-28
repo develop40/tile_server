@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Map srs="+init=epsg:4326" background-color="steelblue">
+    <Style name="Admin style">
+        <Rule>
+            <PolygonSymbolizer fill="#ffffff"/>
+            <LineSymbolizer stroke="#85c5d3" stroke-width="2" stroke-linejoin="round" />
+        </Rule>
+    </Style>
+    <Style name="Ecoregions style">
+        <Rule>
+            <PolygonSymbolizer fill="pink"/>
+            <LineSymbolizer stroke="black" stroke-width="0.5" stroke-linejoin="round" />
+        </Rule>
+    </Style>
+     <Style name="Roads style">
+        <Rule>
+            <LineSymbolizer stroke="red" stroke-width="0.5" smooth="0.1"/>
+        </Rule>
+    </Style>
+     <Style name="Points style">
+        <Rule>
+            <MarkersSymbolizer fill="darkorange" opacity=".7" width="20" height="10" stroke="orange" stroke-width="7" stroke-opacity=".2" placement="point" marker-type="ellipse"/>
+        </Rule>
+    </Style>
+    <Layer name="admin" srs="+init=epsg:4326">
+        <StyleName>Admin style</StyleName>
+        <Datasource>
+            <Parameter name="dbname">isogd_sevastopol</Parameter>
+            <Parameter name="geometry_field">geom</Parameter>
+            <Parameter name="host">127.0.0.1</Parameter>
+            <Parameter name="password">qwerty12+</Parameter>
+            <Parameter name="table">tableapi.land</Parameter>
+            <Parameter name="type">postgis</Parameter>
+            <Parameter name="user">postgres</Parameter>
+        </Datasource>
+    </Layer>
+    <Layer name="ecoregions" srs="+init=epsg:4326">
+        <StyleName>Ecoregions style</StyleName>
+        <Datasource>
+            <Parameter name="dbname">isogd_sevastopol</Parameter>
+            <Parameter name="geometry_field">geom</Parameter>
+            <Parameter name="host">127.0.0.1</Parameter>
+            <Parameter name="password">qwerty12+</Parameter>
+            <Parameter name="table">tableapi.zone_spec_213</Parameter>
+            <Parameter name="type">postgis</Parameter>
+            <Parameter name="user">postgres</Parameter>
+        </Datasource>
+    </Layer>
+    <Layer name="roads" srs="+init=epsg:4326">
+        <StyleName>Roads style</StyleName>
+        <Datasource>
+            <Parameter name="dbname">isogd_sevastopol</Parameter>
+            <Parameter name="geometry_field">geom</Parameter>
+            <Parameter name="host">127.0.0.1</Parameter>
+            <Parameter name="password">qwerty12+</Parameter>
+            <Parameter name="table">tableapi.factors_transport</Parameter>
+            <Parameter name="type">postgis</Parameter>
+            <Parameter name="user">postgres</Parameter>
+        </Datasource>
+    </Layer>
+     <Layer name="points" srs="+init=epsg:4326">
+        <StyleName>Points style</StyleName>
+        <Datasource>
+            <Parameter name="dbname">isogd_sevastopol</Parameter>
+            <Parameter name="geometry_field">geom</Parameter>
+            <Parameter name="host">127.0.0.1</Parameter>
+            <Parameter name="password">qwerty12+</Parameter>
+            <Parameter name="table">tableapi.all_field_types_not_null</Parameter>
+            <Parameter name="type">postgis</Parameter>
+            <Parameter name="user">postgres</Parameter>
+        </Datasource>
+    </Layer>
+
+</Map>
