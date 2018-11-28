@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Map srs="+init=epsg:4326" background-color="steelblue">
+<Map srs="+init=epsg:4326" background-color="transparent">
     <Style name="Admin style">
         <Rule>
             <PolygonSymbolizer fill="#ffffff"/>
@@ -28,7 +28,7 @@
             <Parameter name="dbname">mrsk</Parameter>
             <Parameter name="geometry_field">geom</Parameter>
             <Parameter name="host">127.0.0.1</Parameter>
-            <Parameter name="password">qwerty12+</Parameter>
+            <Parameter name="password">tO8Qa3ng</Parameter>
             <Parameter name="table">mrsk_area_energy</Parameter>
             <Parameter name="type">postgis</Parameter>
             <Parameter name="user">postgres</Parameter>
@@ -40,7 +40,7 @@
             <Parameter name="dbname">mrsk</Parameter>
             <Parameter name="geometry_field">geom</Parameter>
             <Parameter name="host">127.0.0.1</Parameter>
-            <Parameter name="password">qwerty12+</Parameter>
+            <Parameter name="password">tO8Qa3ng</Parameter>
             <Parameter name="table">mrsk_accident_avar</Parameter>
             <Parameter name="type">postgis</Parameter>
             <Parameter name="user">postgres</Parameter>
@@ -52,7 +52,7 @@
             <Parameter name="dbname">mrsk</Parameter>
             <Parameter name="geometry_field">geom</Parameter>
             <Parameter name="host">127.0.0.1</Parameter>
-            <Parameter name="password">qwerty12+</Parameter>
+            <Parameter name="password">tO8Qa3ng</Parameter>
             <Parameter name="table">mrsk_communication_line</Parameter>
             <Parameter name="type">postgis</Parameter>
             <Parameter name="user">postgres</Parameter>
