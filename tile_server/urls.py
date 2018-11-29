@@ -13,14 +13,19 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+import debug_toolbar
+from django.conf.urls import url
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
     path('admin/', admin.site.urls),
-    path('myview/<str:service>/1.0.0/<str:mapname>/<z>/<int:x>/<int:y>.png', views.MyView.as_view(), name='myview')
+    path('myview/<str:service>/1.0.0/<str:mapname>/<z>/<int:x>/<int:y>.png', views.MyView.as_view(), name='myview'),
+    path(r'^__debug__/', include(debug_toolbar.urls))
 ]
+
+urlpatterns += [url(r'^silk/', include('silk.urls', namespace='silk'))]
 
 # /tms/1.0.0/[mapname]/[z]/[x]/[y].png

@@ -3,6 +3,7 @@ import pdb
 import mapnik
 import math
 
+
 # # Размеры тайла
 # TILE_WIDTH = 256
 # TILE_HEIGHT = 256
@@ -17,24 +18,16 @@ import math
 # # Каталог для хранения кэша тайлов
 # CACHE_PATH = 'tile_server/tiles'
 
-def deg2num(lat_deg, lon_deg, zoom):
-    lat_rad = math.radians(lat_deg)
-    n = 2.0 ** zoom
-    xtile = int((lon_deg + 180.0) / 360.0 * n)
-    ytile = int((1.0 - math.log(math.tan(lat_rad) + (1 / math.cos(lat_rad))) / math.pi) / 2.0 * n)
-    return (xtile, ytile, xtile+1, ytile+1)
-
-
-def tms(z, x, y, service):
+def tms(z, x, y, service, mapname):
     # (4370311.220000, 4911352.860000) - (4403732.650000, 4958349.910000)
     # Extent: (4370177.610000, 4908530.650000) - (4411390.670000, 4958581.500000)
-    #(38.376357, 44.940402) - (48.804400, 51.182006)
+    # (38.376357, 44.940402) - (48.804400, 51.182006)
 
     bbox = dict(minx=-180, miny=-90, maxx=180, maxy=90)
-    BBOX_MAXX=180
-    BBOX_MINX=-180
-    BBOX_MAXY=90
-    BBOX_MINY=-90
+    BBOX_MAXX = 180
+    BBOX_MINX = -180
+    BBOX_MAXY = 90
+    BBOX_MINY = -90
     stepx = (BBOX_MAXX - 1.0 - BBOX_MINX) / (2 ** z)
     stepy = (BBOX_MAXY - 1.0 - BBOX_MINY) / (2 ** z)
 
@@ -56,14 +49,40 @@ def tms(z, x, y, service):
         bbox['maxy'] - y * step
     )
 
-    # extents['xyz'] = deg2num(x,y,z)
-
     tile = dict(width=256, height=256)
     map = mapnik.Map(tile['width'], tile['height'])
-    map.background = mapnik.Color('steelblue')
+    map.background = mapnik.Color('transparent')
+    # mapnik.load_map(map, 'tile_server/style/mrsk.xml')
 
-    # mapnik.load_map(map, 'tile_server/style/styles.xml')
-    mapnik.load_map(map, 'tile_server/style/mrsk.xml')
+    style = mapnik.Style()
+    rule = mapnik.Rule()
+    # polygon_symbolizer = mapnik.PolygonSymbolizer()
+    # polygon_symbolizer.fill = mapnik.Color('white')
+    # rule.symbols.append(polygon_symbolizer)
+
+    point_symbolizer= mapnik.PointSymbolizer()
+    rule.symbols.append(point_symbolizer)
+
+    line_symbolizer = mapnik.LineSymbolizer()
+    line_symbolizer.stroke = mapnik.Color('red')
+    line_symbolizer.stroke_width = 1
+    rule.symbols.append(line_symbolizer)  # добавить символ в объект правила
+    style.rules.append(rule)  # теперь добавить правило в стиль, и мы закончили
+    map.append_style('My Style', style)
+
+    layer = mapnik.Layer(mapname)
+    ds = mapnik.PostGIS(host='127.0.0.1',
+                        dbname='mrsk',
+                        user='postgres',
+                        password='qwerty12+',
+                        table=mapname)
+    layer.datasource = ds
+    layer.styles.append('My Style')
+    map.layers.append(layer)
+
+
+
+
     # layer = mapnik.Layer('point')
     # ds = mapnik.PostGIS(host='127.0.0.1',
     #                     dbname='isogd_sevastopol',
@@ -82,20 +101,19 @@ def tms(z, x, y, service):
     # style.rules.append(rule)
     # map.append_style('My Style', style)
 
-
-
     # map.zoom_all()
     # mapnik.render_to_file(map, 'altay.png', 'png')
     # pdb.set_trace()
     box = mapnik.Box2d(*extents.get(service))
 
     # map.zoom_all()
+    mapnik.load_map(map, 'tile_server/style/mrsk.xml')
     map.zoom_to_box(box)
-    mapnik.render_to_file(map, 'world.png', 'png')
+    # mapnik.render_to_file(map, '{0}{1}{2}.png'.format(x,y,z), 'png')
     im = mapnik.Image(map.width, map.height)
-    mapnik.render(map, im)
+    # pdb.set_trace()
+    mapnik.render_layer(map, im, layer=2)
     output = im.tostring('png')
-
     # box = mapnik.Box2d(*extents.get(service))
     # map.zoom_to_box(box)
     # mapnik.render_to_file(map, 'world.png', 'png')

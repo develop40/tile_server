@@ -39,16 +39,28 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework_gis',
+    'silk',
+    # 'debug_toolbar',
+    # 'pympler'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'silk.middleware.SilkyMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
+
+]
+
+MIDDLEWARE_CLASSES = [
+    # ...
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # ...
 ]
 
 ROOT_URLCONF = 'tile_server.urls'
@@ -136,3 +148,10 @@ REST_FRAMEWORK = {
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'tile_server/static'),
 )
+
+# INTERNAL_IPS= ('127.0.0.1')
+
+# DEBUG_TOOLBAR_PANELS  =  (
+#     'debug_toolbar.panels.timer.TimerDebugPanel' ,
+#     'pympler.panels.MemoryPanel' ,
+#     )
